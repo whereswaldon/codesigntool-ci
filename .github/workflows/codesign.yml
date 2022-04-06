@@ -5,5 +5,6 @@ jobs:
     steps:
         - name: download codesigntool and dependencies
           run: |
-            wget https://www.ssl.com/download/codesigntool-for-linux-and-macos/
+            wget -o codesign.zip https://www.ssl.com/download/codesigntool-for-linux-and-macos/
+            unzip codesign.zip
             find .
