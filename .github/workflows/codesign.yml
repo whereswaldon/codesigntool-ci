@@ -9,11 +9,14 @@ jobs:
             unzip codesign.zip
             find .
             cd ./CodeSignTool-v1.2.5/
-            echo -e "#!/bin/bash -x\n\n" >> cst.sh
+            echo -e "#!/bin/bash\n" >> cst.sh
             cat CodeSignTool.sh >> cst.sh
             chmod +x ./cst.sh
             # fix a bug in the script that tries to respect this variable only if it is not set.
             sed -ie 's@if \[\[ -z "${CODE_SIGN_TOOL_PATH}" \]\]; then@if \[\[ -n "${CODE_SIGN_TOOL_PATH}" \]\]; then@' cst.sh
             # trick the script into executing correctly
-            export CODE_SIGN_TOOL_PATH=$PWD
-            ./cst.sh --help
+            echo "CODE_SIGN_TOOL_PATH=$PWD" >> $GITHUB_ENV
+            echo "$PWD" >> $GITHUB_PATH
+        - name: run codesigntool
+          run: |
+            cst.sh sign --help
