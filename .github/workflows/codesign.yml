@@ -5,7 +5,6 @@ jobs:
     steps:
         - name: download codesigntool and dependencies
           run: |
-            #sudo apt-get update && sudo apt-get install -y default-jre-headless
             curl -o codesign.zip https://www.ssl.com/download/codesigntool-for-linux-and-macos/
             unzip codesign.zip
             find .
@@ -13,6 +12,8 @@ jobs:
             echo -e "#!/bin/bash -x\n\n" >> cst.sh
             cat CodeSignTool.sh >> cst.sh
             chmod +x ./cst.sh
+            # fix a bug in the script that tries to respect this variable only if it is not set.
+            sed -e 's@if [[ -z "${CODE_SIGN_TOOL_PATH}" ]]; then@if [[ -n "${CODE_SIGN_TOOL_PATH}" ]]; then@' cst.sh
             # trick the script into executing correctly
-            export CODE_SIGN_TOOL_PATH=.
+            export CODE_SIGN_TOOL_PATH=$PWD
             ./cst.sh --help
