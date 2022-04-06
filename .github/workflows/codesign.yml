@@ -13,7 +13,7 @@ jobs:
             cat CodeSignTool.sh >> cst.sh
             chmod +x ./cst.sh
             # fix a bug in the script that tries to respect this variable only if it is not set.
-            sed -e 's@if [[ -z "${CODE_SIGN_TOOL_PATH}" ]]; then@if [[ -n "${CODE_SIGN_TOOL_PATH}" ]]; then@' cst.sh
+            sed -ei 's@if \[\[ -z "${CODE_SIGN_TOOL_PATH}" \]\]; then@if \[\[ -n "${CODE_SIGN_TOOL_PATH}" \]\]; then@' cst.sh
             # trick the script into executing correctly
             export CODE_SIGN_TOOL_PATH=$PWD
             ./cst.sh --help
