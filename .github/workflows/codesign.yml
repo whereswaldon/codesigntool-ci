@@ -1,0 +1,9 @@
+on: push
+jobs:
+  codesign:
+    runs-on: ubuntu-latest
+    steps:
+        - name: download codesigntool and dependencies
+          run: |
+            wget https://www.ssl.com/download/codesigntool-for-linux-and-macos/
+            find .
