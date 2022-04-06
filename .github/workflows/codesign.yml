@@ -9,5 +9,8 @@ jobs:
             curl -o codesign.zip https://www.ssl.com/download/codesigntool-for-linux-and-macos/
             unzip codesign.zip
             find .
-            chmod +x ./CodeSignTool-v1.2.5/CodeSignTool.sh
-            cd ./CodeSignTool-v1.2.5/ && ./CodeSignTool.sh --help
+            cd ./CodeSignTool-v1.2.5/
+            echo -e "#!/bin/bash -x\n\n" >> cst.sh
+            cat CodeSignTool.sh >> cst.sh
+            chmod +x ./cst.sh
+            ./cst.sh --help
